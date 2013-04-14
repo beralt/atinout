@@ -7,6 +7,7 @@
 
 #define MAX_LINE_LENGTH (4 * 1024)
 static char buf[MAX_LINE_LENGTH];
+static char buf2[MAX_LINE_LENGTH];
 
 /* Replace '\n' with '\r', aka `tr '\012' '\015'` */
 static bool tr_lf_cr(const char *s)
@@ -18,6 +19,20 @@ static bool tr_lf_cr(const char *s)
 	}
 	*p = '\r';
 	return true;
+}
+
+static void strip_cr(char *s)
+{
+	char *from, *to;
+	from = to = s;
+	while (*from != '\0') {
+		if (*from == '\r') {
+			from++;
+			continue;
+		}
+		*to++ = *from++;
+	}
+	*to = '\0';
 }
 
 bool is_final_result(const char * const response)
@@ -68,6 +83,7 @@ int main(int argc, char *argv[])
 {
 	FILE *atcmds;
 	FILE *modem;
+	FILE *output;
 	char *line;
 	bool success;
 
@@ -75,6 +91,7 @@ int main(int argc, char *argv[])
 
 #define INPUT_FILE   argv[1]
 #define MODEM_DEVICE argv[2]
+#define OUTPUT_FILE  argv[3]
 
 	if (strcmp(INPUT_FILE, "-") == 0) {
 		atcmds = stdin;
@@ -92,6 +109,16 @@ int main(int argc, char *argv[])
 		return EXIT_FAILURE;
 	}
 
+	if (strcmp(OUTPUT_FILE, "-") == 0) {
+		output = stdout;
+	} else {
+		output = fopen(OUTPUT_FILE, "wb");
+		if (modem == NULL) {
+			fprintf(stderr, "fopen(%s) failed: %s\n", OUTPUT_FILE, strerror(errno));
+			return EXIT_FAILURE;
+		}
+	}
+
 	goto start;
 	while (line != NULL) {
 		success = tr_lf_cr(line);
@@ -106,11 +133,17 @@ int main(int argc, char *argv[])
 				fputs("EOF from modem\n", stderr);
 				return EXIT_FAILURE;
 			}
+			strcpy(buf2, line);
+			strip_cr(buf2);
+			fputs(buf2, output);
 		} while (! is_final_result(line));
 start:
 		line = fgets(buf, sizeof(buf), atcmds);
 	}
 
+	if (strcmp(OUTPUT_FILE, "-") != 0) {
+		fclose(output);
+	}
 	fclose(modem);
 	if (strcmp(INPUT_FILE, "-") != 0) {
 		fclose(atcmds);
