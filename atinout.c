@@ -4,10 +4,15 @@
 #include <string.h>
 #include <stdbool.h>
 #include <errno.h>
+#include <getopt.h>
 
 #define MAX_LINE_LENGTH (4 * 1024)
 static char buf[MAX_LINE_LENGTH];
 static char buf2[MAX_LINE_LENGTH];
+
+static struct option long_options[] = {
+	{0, 0, 0, 0}
+};
 
 /* Replace '\n' with '\r', aka `tr '\012' '\015'` */
 static bool tr_lf_cr(const char *s)
@@ -87,11 +92,30 @@ int main(int argc, char *argv[])
 	char *line;
 	bool success;
 
+
+	while (1) {
+		int option_index = 0;
+		int c;
+
+		c = getopt_long(argc, argv, "", long_options, &option_index);
+		if (c == -1) {
+			break;
+		}
+		switch (c) {
+		case 0:
+			break;
+		case '?':
+			break;
+		default:
+			fprintf(stderr, "getopt returned character code 0%o\n", c);
+		}
+	}
+
 	(void)argc;
 
-#define INPUT_FILE   argv[1]
-#define MODEM_DEVICE argv[2]
-#define OUTPUT_FILE  argv[3]
+#define INPUT_FILE   argv[optind + 0]
+#define MODEM_DEVICE argv[optind + 1]
+#define OUTPUT_FILE  argv[optind + 2]
 
 	if (strcmp(INPUT_FILE, "-") == 0) {
 		atcmds = stdin;
