@@ -10,7 +10,10 @@
 static char buf[MAX_LINE_LENGTH];
 static char buf2[MAX_LINE_LENGTH];
 
+#define VERSION "0.9"
+
 static struct option long_options[] = {
+	{"version", no_argument, 0, 'V'},
 	{0, 0, 0, 0}
 };
 
@@ -97,11 +100,17 @@ int main(int argc, char *argv[])
 		int option_index = 0;
 		int c;
 
-		c = getopt_long(argc, argv, "", long_options, &option_index);
+		c = getopt_long(argc, argv, "V", long_options, &option_index);
 		if (c == -1) {
 			break;
 		}
 		switch (c) {
+		case 'V':
+			printf("atinout version " VERSION "\n");
+			if (argc == 2) {
+				return EXIT_SUCCESS;
+			}
+			break;
 		case 0:
 			break;
 		case '?':
