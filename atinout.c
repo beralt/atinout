@@ -14,8 +14,25 @@ static char buf2[MAX_LINE_LENGTH];
 
 static struct option long_options[] = {
 	{"version", no_argument, 0, 'V'},
+	{"usage", no_argument, 0, 0},
 	{0, 0, 0, 0}
 };
+
+static void usage(const char * const argv0)
+{
+	printf("Usage: %s <input_file> <modem_device> <output_file>\n", argv0);
+	printf("\n");
+	printf("\t<input_file> is a file with AT commands to be executed. Value '-' means standard input.\n");
+	printf("\t<input_file> is the device file for the modem (e.g. /dev/ttyACM0, /dev/ttyS0, etc).\n");
+	printf("\t<output_file> is a file the responses to the AT commands are saved. Value '-' means standard output.\n");
+	printf("\n");
+	printf("In addition the program supports the following options:\n");
+	printf("\n");
+	printf("\t-h|--help\n");
+	printf("\t-V|--version\n");
+	printf("\t--usage\n");
+	printf("\n");
+}
 
 /* Replace '\n' with '\r', aka `tr '\012' '\015'` */
 static bool tr_lf_cr(const char *s)
@@ -112,6 +129,10 @@ int main(int argc, char *argv[])
 			}
 			break;
 		case 0:
+			if (strcmp("usage", long_options[option_index].name) == 0) {
+				usage(argv[0]);
+				return EXIT_SUCCESS;
+			}
 			break;
 		case '?':
 			break;
@@ -120,7 +141,10 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	(void)argc;
+	if ((argc - optind) != 3) {
+		usage(argv[0]);
+		return EXIT_FAILURE;
+	}
 
 #define INPUT_FILE   argv[optind + 0]
 #define MODEM_DEVICE argv[optind + 1]
