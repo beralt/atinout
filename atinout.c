@@ -13,6 +13,7 @@ static char buf2[MAX_LINE_LENGTH];
 #define VERSION "0.9"
 
 static struct option long_options[] = {
+	{"help", no_argument, 0, 'h'},
 	{"version", no_argument, 0, 'V'},
 	{"usage", no_argument, 0, 0},
 	{0, 0, 0, 0}
@@ -32,6 +33,23 @@ static void usage(const char * const argv0)
 	printf("\t-V|--version\n");
 	printf("\t--usage\n");
 	printf("\n");
+}
+
+static void help(const char * const argv0)
+{
+	printf("This program takes AT commands as input, sends them to the modem and outputs\n");
+	printf("the responses.\n");
+	printf("\n");
+	printf("Example:\n");
+	printf("\n");
+	printf("$ echo 'AT+CPBS=\"ME\",\"ME\"; +CPBR=?' | %s - /dev/ttyACM0 -\n", argv0);
+	printf("AT+CPBS=\"ME\",\"ME\"; +CPBR=?\n");
+	printf("\n");
+	printf("+CPBR: (1-7000),80,62\n");
+	printf("\n");
+	printf("OK\n");
+	printf("$\n");
+
 }
 
 /* Replace '\n' with '\r', aka `tr '\012' '\015'` */
@@ -117,11 +135,14 @@ int main(int argc, char *argv[])
 		int option_index = 0;
 		int c;
 
-		c = getopt_long(argc, argv, "V", long_options, &option_index);
+		c = getopt_long(argc, argv, "hV", long_options, &option_index);
 		if (c == -1) {
 			break;
 		}
 		switch (c) {
+		case 'h':
+			help(argv[0]);
+			return EXIT_SUCCESS;
 		case 'V':
 			printf("atinout version " VERSION "\n");
 			if (argc == 2) {
