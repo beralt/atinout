@@ -9,7 +9,10 @@ CFLAGS	= -W -Wall -Wextra -Werror \
 LDFLAGS =
 
 ifeq "REMOVE_THIS_FOR_RELEASE" "REMOVE_THIS_FOR_RELEASE"
-all: atinout atinout.1
+%.spec: %.spec.in Makefile
+	sed s/@VERSION@/$(VERSION)/g < $@.in > $@
+
+all: atinout atinout.1 atinout.spec
 else
 all: atinout
 endif
