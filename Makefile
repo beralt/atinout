@@ -1,6 +1,8 @@
+VERSION	= 0.9
 
 CC	= gcc
 CFLAGS	= -W -Wall -Wextra -Werror \
+	-DVERSION=\"$(VERSION)\" \
 	-g
 LDFLAGS =
 

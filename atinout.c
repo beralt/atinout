@@ -36,8 +36,6 @@
 static char buf[MAX_LINE_LENGTH];
 static char buf2[MAX_LINE_LENGTH];
 
-#define VERSION "0.9"
-
 static struct option long_options[] = {
 	{"help", no_argument, 0, 'h'},
 	{"version", no_argument, 0, 'V'},
