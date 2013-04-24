@@ -1,0 +1,38 @@
+include Makefile
+
+DIST_FILES = \
+	Changelog \
+	Makefile \
+	README \
+	atinout.1 \
+	atinout.1.html \
+	atinout.c \
+	gplv3.txt \
+	logo/atinout.svg
+
+changelog:
+	( \
+		echo; \
+		date +"Version $(VERSION) (%Y-%m-%d)"; \
+		echo ----------------------------; \
+		echo; \
+	) >> Changelog
+	vi +$(shell wc -l Changelog)
+
+dist_tar_file:
+	if [ `git tag -l v$(VERSION)`x == x ]; \
+	then \
+		echo "Tag v$(VERSION) is missing, fix that"; \
+		exit 1; \
+	fi
+	if [ -f Makefile.SAVE ]; \
+	then \
+		echo "Resolve Makefile.SAVE conflict"; \
+		exit 1; \
+	fi
+	mv Makefile Makefile.SAVE
+	./strip_make.pl Makefile.SAVE > Makefile
+	git diff Makefile
+	tar zcvf atinout-$(VERSION).tar.gz --transform="s@^@atinout-$(VERSION)/@" $(DIST_FILES)
+	mv Makefile.SAVE Makefile
+
