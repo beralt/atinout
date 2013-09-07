@@ -227,12 +227,17 @@ int main(int argc, char *argv[])
 
 	goto start;
 	while (line != NULL) {
+		int res;
 		success = tr_lf_cr(line);
 		if (! success) {
 			fprintf(stderr, "invalid string: '%s'\n", line);
 			return EXIT_FAILURE;
 		}
-		fputs(line, modem);
+		res = fputs(line, modem);
+		if (res < 0) {
+			fprintf(stderr, "failed to send '%s' to modem (res = %d)\n", line, res);
+			return EXIT_FAILURE;
+		}
 		do {
 			line = fgets(buf, sizeof(buf), modem);
 			if (line == NULL) {
@@ -241,7 +246,11 @@ int main(int argc, char *argv[])
 			}
 			strcpy(buf2, line);
 			strip_cr(buf2);
-			fputs(buf2, output);
+			res = fputs(buf2, output);
+			if (res < 0) {
+				fprintf(stderr, "failed to write '%s' to output file (res = %d)\n", buf2, res);
+				return EXIT_FAILURE;
+			}
 		} while (! is_final_result(line));
 start:
 		line = fgets(buf, sizeof(buf), atcmds);
