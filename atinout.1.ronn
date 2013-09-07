@@ -86,7 +86,7 @@ Query how many entries the phone book has for ME storage.
     OK
     $
 
-Backup all phone numbers. This will potentially not be the same as
+Backup all phone numbers. This will most likely not be the same as
 a full backup of all contact information, but at least the names and
 numbers are saved which is the most vital information.
 
