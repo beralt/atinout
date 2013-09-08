@@ -45,6 +45,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+* Sun Sep  8 2013 Håkon Løvdal <hlovdal@users.sourceforge.net> - 0.9.1-1
+- Add RPM spec file, "rpmbuild -ta atinout-0.9.1.tar.gz" will work.
+- Fix Makefile so that it works without problems when compiling source
+  from tar file (git source was always ok).
+- Fixed test checking wrong file when testing if opnening it was ok.
+
 * Wed Apr 24 2013 Håkon Løvdal <hlovdal@users.sourceforge.net> - 0.9-1
 - Initial release.
-
