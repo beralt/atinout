@@ -14,6 +14,7 @@ License:        GPLv3+
 
 URL:            http://atinout.sourceforge.net/
 Source0:        http://sourceforge.net/projects/%{name}/files/%{name}-%{version}.tar.gz
+# The BuildRoot tag should always be used, even if newer rpms override it anyway. The preferred path is %{_tmppath}/%{name}-%{version}-build.
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %global _hardened_build 1
@@ -38,8 +39,7 @@ $
 make all %{?_smp_mflags}
 
 %install
-rm -rf $RPM_BUILD_ROOT
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall DESTDIR=$RPM_BUILD_ROOT
 
 %clean
 rm -rf $RPM_BUILD_ROOT
