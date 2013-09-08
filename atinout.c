@@ -153,6 +153,7 @@ int main(int argc, char *argv[])
 	FILE *output;
 	char *line;
 	bool success;
+	int res;
 
 	while (true) {
 		int option_index = 0;
@@ -226,7 +227,6 @@ int main(int argc, char *argv[])
 
 	goto start;
 	while (line != NULL) {
-		int res;
 		success = tr_lf_cr(line);
 		if (! success) {
 			fprintf(stderr, "invalid string: '%s'\n", line);
@@ -256,11 +256,23 @@ start:
 	}
 
 	if (strcmp(OUTPUT_FILE, "-") != 0) {
-		fclose(output);
+		res = fclose(output);
+		if (res != 0) {
+			fprintf(stderr, "closing output failed: %s\n", strerror(errno));
+			return EXIT_FAILURE;
+		}
 	}
-	fclose(modem);
+	res = fclose(modem);
+	if (res != 0) {
+		fprintf(stderr, "closing modem failed: %s\n", strerror(errno));
+		return EXIT_FAILURE;
+	}
 	if (strcmp(INPUT_FILE, "-") != 0) {
-		fclose(atcmds);
+		res = fclose(atcmds);
+		if (res != 0) {
+			fprintf(stderr, "closing input failed: %s\n", strerror(errno));
+			return EXIT_FAILURE;
+		}
 	}
 	return EXIT_SUCCESS;
 }
