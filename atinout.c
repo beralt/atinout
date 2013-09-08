@@ -154,8 +154,7 @@ int main(int argc, char *argv[])
 	char *line;
 	bool success;
 
-
-	while (1) {
+	while (true) {
 		int option_index = 0;
 		int c;
 
