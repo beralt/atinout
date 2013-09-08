@@ -1,9 +1,17 @@
 Name:           atinout
 Summary:        AT commands as input are sent to modem and responses given as output
 Version:        @VERSION@
+
+%if 0%{?suse_version}
+Release:        1
+Group:          Hardware/Modem
+License:        GPL-3.0+
+%else
 Release:        1%{?dist}
 Group:          Applications/Communications
 License:        GPLv3+
+%endif
+
 URL:            http://atinout.sourceforge.net/
 Source0:        http://sourceforge.net/projects/%{name}/files/%{name}-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
