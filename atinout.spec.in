@@ -1,7 +1,7 @@
 Name:           atinout
+Summary:        AT commands as input are sent to modem and responses given as output
 Version:        @VERSION@
 Release:        1%{?dist}
-Summary:        AT commands as input are sent to modem and responses given as output
 Group:          Applications/Communications
 License:        GPLv3+
 URL:            http://atinout.sourceforge.net/
@@ -15,7 +15,7 @@ This program will read a file (or stdin) containing a list of AT
 commands. Each command will be send to the modem, and all the response
 for the command will be output to file (or stdout).
 
-Example, to hang up any ongoing call:
+Example, to hang up an ongoing call:
 
 $ echo ATH | atinout - /dev/ttyACM0 -
 ATH
