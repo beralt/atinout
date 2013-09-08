@@ -218,7 +218,7 @@ int main(int argc, char *argv[])
 		output = stdout;
 	} else {
 		output = fopen(OUTPUT_FILE, "wb");
-		if (modem == NULL) {
+		if (output == NULL) {
 			fprintf(stderr, "fopen(%s) failed: %s\n", OUTPUT_FILE, strerror(errno));
 			return EXIT_FAILURE;
 		}
