@@ -238,7 +238,7 @@ int main(int argc, char *argv[])
 			return EXIT_FAILURE;
 		}
 		do {
-			line = fgets(buf, sizeof(buf), modem);
+			line = fgets(buf, (int)sizeof(buf), modem);
 			if (line == NULL) {
 				fputs("EOF from modem\n", stderr);
 				return EXIT_FAILURE;
@@ -252,7 +252,7 @@ int main(int argc, char *argv[])
 			}
 		} while (! is_final_result(line));
 start:
-		line = fgets(buf, sizeof(buf), atcmds);
+		line = fgets(buf, (int)sizeof(buf), atcmds);
 	}
 
 	if (strcmp(OUTPUT_FILE, "-") != 0) {
