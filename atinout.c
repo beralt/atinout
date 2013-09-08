@@ -42,6 +42,7 @@ static struct option long_options[] = {
 	{"usage", no_argument, NULL, 0},
 	{NULL, 0, NULL, 0}
 };
+static const char *short_options = "hV";
 
 static void usage(const char * const argv0)
 {
@@ -159,7 +160,7 @@ int main(int argc, char *argv[])
 		int option_index = 0;
 		int c;
 
-		c = getopt_long(argc, argv, "hV", long_options, &option_index);
+		c = getopt_long(argc, argv, short_options, long_options, &option_index);
 		if (c == -1) {
 			break;
 		}
