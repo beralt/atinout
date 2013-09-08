@@ -102,7 +102,7 @@ static void strip_cr(char *s)
 	*to = '\0';
 }
 
-bool is_final_result(const char * const response)
+static bool is_final_result(const char * const response)
 {
 #define STARTS_WITH(a, b) ( strncmp((a), (b), strlen(b)) == 0)
 	switch (response[0]) {
