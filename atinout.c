@@ -240,7 +240,7 @@ int main(int argc, char *argv[])
 		do {
 			line = fgets(buf, (int)sizeof(buf), modem);
 			if (line == NULL) {
-				fputs("EOF from modem\n", stderr);
+				fprintf(stderr, "EOF from modem\n");
 				return EXIT_FAILURE;
 			}
 			strcpy(buf2, line);
