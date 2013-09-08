@@ -37,10 +37,10 @@ static char buf[MAX_LINE_LENGTH];
 static char buf2[MAX_LINE_LENGTH];
 
 static struct option long_options[] = {
-	{"help", no_argument, 0, 'h'},
-	{"version", no_argument, 0, 'V'},
-	{"usage", no_argument, 0, 0},
-	{0, 0, 0, 0}
+	{"help", no_argument, NULL, 'h'},
+	{"version", no_argument, NULL, 'V'},
+	{"usage", no_argument, NULL, 0},
+	{NULL, 0, NULL, 0}
 };
 
 static void usage(const char * const argv0)
