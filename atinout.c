@@ -185,7 +185,7 @@ int main(int argc, char *argv[])
 		case '?':
 			break;
 		default:
-			fprintf(stderr, "getopt returned character code 0%o\n", c);
+			fprintf(stderr, "getopt returned character code 0x%02x\n", (unsigned int)c);
 		}
 	}
 
