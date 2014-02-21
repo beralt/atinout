@@ -43,7 +43,7 @@ The modem is identified with <modem_device> (e.g. /dev/ttyS0 (COM1),
 (e.g. speed, parity) is done before opening the device.
 
 The responses from the AT commands are written to <output_file>, or
-standard output i the file name `-` is given.
+standard output if the file name `-` is given.
 
 ## OPTIONS
 
