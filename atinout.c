@@ -156,15 +156,10 @@ int main(int argc, char *argv[])
 	char *line;
 	bool success;
 	int res;
+	int option_index = 0;
+	int c;
 
-	while (true) {
-		int option_index = 0;
-		int c;
-
-		c = getopt_long(argc, argv, short_options, long_options, &option_index);
-		if (c == -1) {
-			break;
-		}
+	while ((c = getopt_long(argc, argv, short_options, long_options, &option_index)) != -1) {
 		switch (c) {
 		case 'h':
 			help(argv[0]);
@@ -227,8 +222,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	goto start;
-	while (line != NULL) {
+	while ((line = fgets(buf, (int)sizeof(buf), atcmds)) != NULL) {
 		success = tr_lf_cr(line);
 		if (! success) {
 			fprintf(stderr, "invalid string: '%s'\n", line);
@@ -253,8 +247,6 @@ int main(int argc, char *argv[])
 				return EXIT_FAILURE;
 			}
 		} while (! is_final_result(line));
-start:
-		line = fgets(buf, (int)sizeof(buf), atcmds);
 	}
 
 	if (strcmp(OUTPUT_FILE, "-") != 0) {
