@@ -77,7 +77,10 @@ static void help(const char * const argv0)
 
 }
 
-/* Replace '\n' with '\r', aka `tr '\012' '\015'` */
+/**
+ * Replace '\n' with '\r', aka `tr '\012' '\015'` for a single line.
+ * Supports both "\n" and "\r\n" line endings.
+ */
 static bool tr_lf_cr(const char *s)
 {
 	char *p;
@@ -85,7 +88,11 @@ static bool tr_lf_cr(const char *s)
 	if (p == NULL || p[1] != '\0') {
 		return false;
 	}
-	*p = '\r';
+	if (p > s && p[-1] == '\r') {
+		*p = '\0';
+	} else {
+		*p = '\r';
+	}
 	return true;
 }
 
