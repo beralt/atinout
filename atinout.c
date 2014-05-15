@@ -49,7 +49,7 @@ static void usage(const char * const argv0)
 	printf("Usage: %s <input_file> <modem_device> <output_file>\n", argv0);
 	printf("\n");
 	printf("\t<input_file> is a file with AT commands to be executed. Value '-' means standard input.\n");
-	printf("\t<input_file> is the device file for the modem (e.g. /dev/ttyACM0, /dev/ttyS0, etc).\n");
+	printf("\t<modem_device> is the device file for the modem (e.g. /dev/ttyACM0, /dev/ttyS0, etc).\n");
 	printf("\t<output_file> is a file the responses to the AT commands are saved. Value '-' means standard output.\n");
 	printf("\n");
 	printf("In addition the program supports the following options:\n");
