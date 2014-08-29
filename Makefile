@@ -29,7 +29,7 @@ atinout.1 atinout.1.html: atinout.1.ronn
 	ronn $^
 
 clean:
-	rm -f atinout atinout.1 atinout.1.html
+	rm -f atinout atinout.1 atinout.1.html atinout.spec
 else
 clean:
 	rm -f atinout
