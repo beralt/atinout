@@ -19,7 +19,7 @@ changelog:
 		echo; \
 	) >> Changelog
 	vi +$(shell wc -l Changelog)
-	(date | sed 's/^/* /; s/ ..:..:.. CEST//' | tr -d '\012'; echo " Håkon Løvdal <hlovdal@users.sourceforge.net> - $(VERSION)-1") >> atinout.spec.in
+	(date | sed 's/^/* /; s/ ..:..:.. CES?T//' | tr -d '\012'; echo " Håkon Løvdal <hlovdal@users.sourceforge.net> - $(VERSION)-1") >> atinout.spec.in
 	sed -n '/$(VERSION)/,$$p' Changelog | sed '1,3d; s/^\*/-/' >> atinout.spec.in
 	vi +$(shell wc -l atinout.spec.in)
 
