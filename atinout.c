@@ -52,7 +52,7 @@ static void usage(const char * const argv0)
 	printf("\t<modem_device> is the device file for the modem (e.g. /dev/ttyACM0, /dev/ttyS0, etc).\n");
 	printf("\t<output_file> is a file the responses to the AT commands are saved. Value '-' means standard output.\n");
 	printf("\n");
-	printf("In addition the program supports the following options:\n");
+	printf("In addition the program supports the following options as the only argument:\n");
 	printf("\n");
 	printf("\t-h|--help\n");
 	printf("\t-V|--version\n");
@@ -74,6 +74,8 @@ static void help(const char * const argv0)
 	printf("\n");
 	printf("OK\n");
 	printf("$\n");
+	printf("\n");
+	printf("See also the --usage command line option\n");
 
 }
 
