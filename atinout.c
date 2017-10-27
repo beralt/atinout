@@ -150,7 +150,7 @@ static bool is_final_result(const char * const response)
 		if (strcmp(&response[1], "K\r\n") == 0) {
 			return true;
 		}
-		/* no break */
+		// fallthrough
 	default:
 		return false;
 	}
