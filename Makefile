@@ -2,20 +2,13 @@ VERSION	= 0.9.1
 
 PREFIX	= /usr
 
-CC	= gcc
-CFLAGS	= -W -Wall -Wextra -Werror \
+CC	?= gcc
+CFLAGS	?= -W -Wall -Wextra -Werror \
 	-DVERSION=\"$(VERSION)\" \
 	-g
-LDFLAGS =
+LDFLAGS ?=
 
-ifeq "REMOVE_THIS_FOR_RELEASE" "REMOVE_THIS_FOR_RELEASE"
-%.spec: %.spec.in Makefile
-	sed s/@VERSION@/$(VERSION)/g < $@.in > $@
-
-all: atinout atinout.1 atinout.spec
-else
 all: atinout
-endif
 
 atinout: atinout.c
 	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $^
