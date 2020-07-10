@@ -31,5 +31,7 @@ endif
 install: all
 	mkdir -p $(DESTDIR)$(PREFIX)/bin
 	cp atinout $(DESTDIR)$(PREFIX)/bin
+
+install-man: atinout.1
 	mkdir -p $(DESTDIR)$(PREFIX)/share/man/man1
 	cp atinout.1 $(DESTDIR)$(PREFIX)/share/man/man1/atinout.1
