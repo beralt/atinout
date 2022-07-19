@@ -8,7 +8,7 @@ CFLAGS	?= -W -Wall -Wextra -Werror \
 	-g
 LDFLAGS ?=
 
-all: atinout atinout.1
+all: atinout
 
 atinout: atinout.c
 	$(CC) -o $@ $(CFLAGS) $(LDFLAGS) $^
