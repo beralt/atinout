@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv='content-type' content='text/html;charset=utf8'>
+  <meta name='generator' content='Ronn-NG/v0.9.1 (http://github.com/apjanke/ronn-ng/tree/0.9.1)'>
+  <title>atinout(1) - Send AT commands to modem, capturing the response</title>
+  <style type='text/css' media='all'>
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+</head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id='manpage'>
+  <div class='mp' id='man'>
+
+  <div class='man-navigation' style='display:none'>
+    <a href="#NAME">NAME</a>
+    <a href="#SYNOPSIS">SYNOPSIS</a>
+    <a href="#DESCRIPTION">DESCRIPTION</a>
+    <a href="#FILES">FILES</a>
+    <a href="#OPTIONS">OPTIONS</a>
+    <a href="#EXAMPLES">EXAMPLES</a>
+    <a href="#ENVIRONMENT">ENVIRONMENT</a>
+    <a href="#BUGS">BUGS</a>
+    <a href="#COPYRIGHT">COPYRIGHT</a>
+    <a href="#SEE-ALSO">SEE ALSO</a>
+  </div>
+
+  <ol class='man-decor man-head man head'>
+    <li class='tl'>atinout(1)</li>
+    <li class='tc'></li>
+    <li class='tr'>atinout(1)</li>
+  </ol>
+
+  
+
+<h2 id="NAME">NAME</h2>
+<p class="man-name">
+  <code>atinout</code> - <span class="man-whatis">Send AT commands to modem, capturing the response</span>
+</p>
+<h2 id="SYNOPSIS">SYNOPSIS</h2>
+
+<p><code>atinout</code> <var>input_file</var>|<code>-</code> <var>modem_device</var> <var>output_file</var>|<code>-</code><br>
+<code>atinout</code> <code>--version</code><br>
+<code>atinout</code> <code>--usage</code><br>
+<code>atinout</code> <code>--help</code><br></p>
+
+<h2 id="DESCRIPTION">DESCRIPTION</h2>
+
+<p><strong>Atinout</strong> reads a list of AT commands. It sends those commands one by one
+to the modem, waiting for the final result code for the
+currently running command before continuing with the next command in
+the list. The output from the commands is saved.</p>
+
+<p>Notice that <strong>atinout</strong> is strictly about sending AT commands only; it
+cannot be used for AT commands that expect additional input data (e.g.
+AT+CMGS etc).</p>
+
+<h2 id="FILES">FILES</h2>
+
+<p><strong>Atinout</strong> expects <var>input_file</var> to be a list of AT command to be run. If
+the file name <code>-</code> is used then standard input is read.</p>
+
+<p>Although the above states a list of AT commands it is actually not just
+a list of command but more generally a list of AT command lines. However
+the rest of the man page will just refer to AT commands; running several
+commands in one command line offers no benefits, and if one of them fails
+you have no idea of which one failed. So unless maybe for a single run
+on the command line (see EXAMPLES), I recommend against putting more
+than one command on each command line.</p>
+
+<p>And if the distinction between AT command and AT command line
+was not something you were deeply familiar with you should read
+the ITU V.250 specification about AT commands. In fact, unless
+you already have read V.250 before, you absolutely should go to
+http://www.itu.int/rec/T-REC-V.250-200307-I/en and do so right away.</p>
+
+<p>The modem is identified with <var>modem_device</var> (e.g. /dev/ttyS0 (COM1),
+/dev/ttyACM0 (USB phone serial interface), ...). No serial configuration
+(e.g. speed, parity) is done before opening the device.</p>
+
+<p>The responses from the AT commands are written to <var>output_file</var>, or
+standard output if the file name <code>-</code> is given.</p>
+
+<h2 id="OPTIONS">OPTIONS</h2>
+
+<p>The following list of options are supported:</p>
+
+<dl>
+<dt>
+<code>-h</code>, <code>--help</code>
+</dt>
+<dd>Prints explanation and gives an example on usage.</dd>
+<dt><code>--usage</code></dt>
+<dd>Prints information about arguments and options.</dd>
+<dt><code>--version</code></dt>
+<dd>Print version information. If this is the only option given, also prints
+copyright/licensing information.</dd>
+</dl>
+
+<h2 id="EXAMPLES">EXAMPLES</h2>
+
+<p>Check that the modem is connected and alive.</p>
+
+<pre><code>$ echo AT | atinout - /dev/ttyACM0 -
+AT
+OK
+$
+</code></pre>
+
+<p>Hang up any calls.</p>
+
+<pre><code>$ echo ATH | atinout - /dev/ttyACM0 -
+ATH
+OK
+$
+</code></pre>
+
+<p>Query how many entries the phone book has for ME storage.</p>
+
+<pre><code>$ echo 'AT+CPBS="ME"; +CPBR=?' | atinout - /dev/ttyACM0 -
+AT+CPBS="ME"; +CPBR=?
+
++CPBR: (1-7000),80,62
+
+OK
+$
+</code></pre>
+
+<p>Backup all phone numbers. This will most likely not be the same as
+a full backup of all contact information, but at least the names and
+numbers are saved which is the most vital information.</p>
+
+<pre><code>$ cat &gt; save-phonebooks &lt;&lt;EOF
+AT+CSCS="UTF-8"
+AT+CGMI
+AT+CGMR
+AT+CPBS="SM"
+AT+CPBR=1,240
+AT+CPBS="ME"
+AT+CPBR=1,7000
+EOF
+$ atinout save-phonebooks /dev/ttyACM0 phonebook_backup.`date "+%Y-%m-%d_%H-%M"`
+$
+</code></pre>
+
+<p>List current calls. The information text format is (see 27.007 for details):</p>
+
+<pre><code>+CLCC: &lt;id1&gt;,&lt;dir&gt;,&lt;stat&gt;,&lt;mode&gt;,&lt;mpty&gt;[,&lt;number&gt;,&lt;type&gt;[,&lt;alpha&gt;[,&lt;priority&gt;]]]
+
+# No active calls
+$ echo AT+CLCC | atinout - /dev/ttyACM0 -
+AT+CLCC
+OK
+$
+
+# One active call
+$ echo AT+CLCC | atinout - /dev/ttyACM0 -
+AT+CLCC
++CLCC: 1,0,3,0,0,"0123456789",129,"",0
+
+OK
+$
+</code></pre>
+
+<h2 id="ENVIRONMENT">ENVIRONMENT</h2>
+
+<p>No environmental variables are used.</p>
+
+<h2 id="BUGS">BUGS</h2>
+
+<p><strong>Atinout</strong> does not support reading response lines longer than 4095
+characters.</p>
+
+<p><strong>Atinout</strong> does not do any serial port configuration, it just opens
+the device as is.</p>
+
+<h2 id="COPYRIGHT">COPYRIGHT</h2>
+
+<p>Atinout is Copyright (C) 2013 Håkon Løvdal <a href="mailto:hlovdal@users.sourceforge.net" data-bare-link="true">hlovdal@users.sourceforge.net</a></p>
+
+<h2 id="SEE-ALSO">SEE ALSO</h2>
+
+<p>V.250 (http://www.itu.int/rec/T-REC-V.250-200307-I/en),
+27.007 (http://www.3gpp.org/ftp/Specs/html-info/27007.htm),
+27.005 (http://www.3gpp.org/ftp/Specs/html-info/27005.htm)</p>
+
+  <ol class='man-decor man-foot man foot'>
+    <li class='tl'></li>
+    <li class='tc'>July 2022</li>
+    <li class='tr'>atinout(1)</li>
+  </ol>
+
+  </div>
+</body>
+</html>
