@@ -9,16 +9,6 @@ export DH_VERBOSE = 1
 override_dh_auto_build:
 	dh_auto_build --builddirectory atinout -- CFLAGS="-W -Wall -Wextra -Werror -DVERSION=\"$(VERSION)\" -g" LDFLAGS=-static atinout.1
 	dh_auto_build --builddirectory atinout -- CFLAGS="-W -Wall -Wextra -Werror -DVERSION=\"$(VERSION)\" -g" LDFLAGS=-static
-# Use make directly for the build since dh_make automatically adds build flags incompatible with telit makefiles
-	$(MAKE) -C telit-fw all
 
 override_dh_auto_install:
 	dh_auto_install --builddirectory atinout --destdir debian/sabanto-modem-config
-# Manually install m2mapz.bin since it has no install target
-	install -D -m 0755 telit-fw/build/m2mapz.bin \
-		debian/sabanto-modem-config/usr/lib/telit-firmware/m2mapz.bin
-
-override_dh_shlibdeps:
-# Skip dependency scanning for m2mapz.bin since deps are not required in final binary
-# and are present on the modem's filesystem already
-	dh_shlibdeps -Xusr/lib/telit-firmware/m2mapz.bin

@@ -21,9 +21,13 @@ jobs:
         run: |
           asset="./build/sabanto-modem-config_${GITHUB_REF_NAME#v}_arm64.deb"
           echo "asset=$asset" >> $GITHUB_ENV
+          echo "telit_bin=./build/m2mapz.bin" >> $GITHUB_ENV
 
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          files: ${{ env.asset }}
+          files: |
+            ${{ env.asset }}
+            ${{ env.telit_bin }}
+          fail_on_unmatched_files: true
           generate_release_notes: true

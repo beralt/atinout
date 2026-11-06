@@ -1,5 +1,2 @@
 sabanto-modem-config: statically-linked-binary usr/bin/atinout
-sabanto-modem-config: hardening-no-pie usr/lib/telit-firmware/m2mapz.bin
-sabanto-modem-config: hardening-no-relro usr/lib/telit-firmware/m2mapz.bin
-sabanto-modem-config: binary-from-other-architecture usr/lib/telit-firmware/m2mapz.bin
 sabanto-modem-config: missing-depends-line

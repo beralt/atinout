@@ -30,4 +30,5 @@ mkdir -p ${PARENT_DIR}/build
 # Run the docker container in detached mode with a bind mounted build directory
 docker run --name "${PROJECT}" -u $(id -u):$(id -g) -v \
 "${PARENT_DIR}:/tmp/${PARENT_DIR_NAME}" "${PROJECT_IMAGE}" \
-bash -c "/tmp/atinout/scripts/build-deb.sh && cp /tmp/*.deb /tmp/atinout/build/"
+bash -c "/tmp/atinout/scripts/build-deb.sh && cp /tmp/*.deb /tmp/atinout/build/ && \
+make -C /tmp/atinout/telit-fw all && cp /tmp/atinout/telit-fw/build/m2mapz.bin /tmp/atinout/build/"
